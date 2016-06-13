@@ -26,9 +26,9 @@
         [[UIApplication sharedApplication] registerForRemoteNotificationTypes:
          (UIUserNotificationTypeBadge | UIUserNotificationTypeSound | UIUserNotificationTypeAlert)];
     }
-//    [pushMgr registerWithLaunchOptions:launchOptions];
-    self.oneSignal = [[OneSignal alloc] initWithLaunchOptions:launchOptions     appId:@"a09a5d0e-2ca0-469e-84b3-154cf476983f"
-                                           handleNotification:nil];
+    [pushMgr registerWithLaunchOptions:launchOptions];
+//    self.oneSignal = [[OneSignal alloc] initWithLaunchOptions:launchOptions     appId:@"a09a5d0e-2ca0-469e-84b3-154cf476983f"
+//                                           handleNotification:nil];
     return YES;
 }
 

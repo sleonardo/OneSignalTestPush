@@ -48,7 +48,7 @@
                                        handleNotification:^(NSString *message, NSDictionary *additionalData, BOOL isActive) {
                                            NSLog(@"RegisterOneSignal: %@ %@ %d", message, additionalData, isActive);
                                        } autoRegister:NO];
-//    [_oneSignal enableInAppAlertNotification:YES];
+    [_oneSignal enableInAppAlertNotification:YES];
     if (!_userID) {
         [_oneSignal IdsAvailable:^(NSString* userId, NSString* pushToken) {
             NSLog(@"UserId:%@", userId);
@@ -86,6 +86,37 @@
     }];
     
 }
+
+- (void)postWithInteractiveNotificationWithText:(NSString *)msg
+                                           time:(NSDate *)date
+                                        success:(void(^)(NSString *notificationID))handler
+                                        failure:(void(^)(NSError *error))failHandler {
+    if (!_userID) {
+        NSLog(@"Error: OS user id nill");
+        return;
+    }
+    NSString *time = [self getUTCFormateDate:date];
+    NSArray *array = @[@{@"id": @"id1", @"text": @"button1", @"icon": @"ic_menu_share"}, @{@"id": @"id2", @"text": @"button2", @"icon": @"ic_menu_share"}];
+    
+    NSDictionary *info = @{
+                           @"contents" : @{@"en": msg},
+                           @"include_player_ids": @[_userID],
+                           @"send_after": time,
+                           @"buttons": array,
+                           @"content_available" : [NSNumber numberWithBool:YES]
+                           };
+    [_oneSignal postNotification:info onSuccess:^(NSDictionary *result) {
+        NSLog(@"Post Success: %@", result);
+        NSString *notify_id = [result objectForKey:@"id"];
+        handler(notify_id);
+    } onFailure:^(NSError *error) {
+        NSLog(@"Post Error: %@", error);
+        failHandler(error);
+    }];
+    
+}
+
+
 
 #pragma - Utilities
 

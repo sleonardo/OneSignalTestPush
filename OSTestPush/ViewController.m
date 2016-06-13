@@ -38,16 +38,21 @@
 }
 
 - (IBAction)pushButtonPressed:(id)sender {
-    // schedule 2 local notifications at tomorrow
-    [LocalPushMgr scheduleAtDate:[[NSDate date] dateByAddingTimeInterval:24*60*60]];
-    [LocalPushMgr scheduleAtDate:[[NSDate date] dateByAddingTimeInterval:25*60*60]];
-    // schedule 1 push notifications at 1 minute later, when you receive push notification from server, press Button Reload to update status
-    [pushMgr postNotificationWithText:@"OneSignal" time:[[NSDate date] dateByAddingTimeInterval:60] success:^(NSString *notificationID) {
+
+    [pushMgr postNotificationWithText:@"Normal OneSignal" time:[[NSDate date] dateByAddingTimeInterval:30] success:^(NSString *notificationID) {
         NSLog(@"Success");
         
     } failure:^(NSError *error) {
         NSLog(@"Error: %@", error);
     }];
+    
+    [pushMgr postWithInteractiveNotificationWithText:@"Interactive OneSignal" time:[[NSDate date] dateByAddingTimeInterval:40] success:^(NSString *notificationID) {
+        NSLog(@"Success");
+        
+    } failure:^(NSError *error) {
+        NSLog(@"Error: %@", error);
+    }];
+    
     _statusLabel.text = [LocalPushMgr stringOfAllNotifications];
 }
 @end

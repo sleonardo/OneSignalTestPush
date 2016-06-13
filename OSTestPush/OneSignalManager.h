@@ -20,6 +20,9 @@
                          success:(void(^)(NSString *notificationID))handler
                          failure:(void(^)(NSError *error))failHandler;
 
-
+- (void)postWithInteractiveNotificationWithText:(NSString *)msg
+                            time:(NSDate *)date
+                         success:(void(^)(NSString *notificationID))handler
+                         failure:(void(^)(NSError *error))failHandler;
 
 @end
