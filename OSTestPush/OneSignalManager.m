@@ -47,8 +47,8 @@
                                                     appId:onesignal_appid
                                        handleNotification:^(NSString *message, NSDictionary *additionalData, BOOL isActive) {
                                            NSLog(@"RegisterOneSignal: %@ %@ %d", message, additionalData, isActive);
-                                       } autoRegister:YES];
-    [_oneSignal enableInAppAlertNotification:YES];
+                                       } autoRegister:NO];
+//    [_oneSignal enableInAppAlertNotification:YES];
     if (!_userID) {
         [_oneSignal IdsAvailable:^(NSString* userId, NSString* pushToken) {
             NSLog(@"UserId:%@", userId);
